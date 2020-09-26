@@ -37,6 +37,7 @@ class UserFrame extends JFrame{
         ImageIcon icon = new ImageIcon(iconUrl);
         this.setIconImage(icon.getImage());
         setBounds(600,300,280,350);
+        setResizable(false);
         UserPanel newUser = new UserPanel();
         add(newUser);
         setVisible(true);
