@@ -23,6 +23,7 @@ class UserFrame extends JFrame{
                 "IdeaProjects\\TareaChat\\src\\tarea\\tareaChat\\chat-bubble.png");
         this.setIconImage(icon.getImage());
         setBounds(600,300,280,350);
+        setResizable(false);
         UserPanel newUser = new UserPanel();
         add(newUser);
         setVisible(true);
