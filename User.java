@@ -9,6 +9,9 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.*;
 
+/**
+ * Genera una ventana de Chat para un usuario, con su respectivo ServerSocket
+ */
 public class User {
     public static void main(String[] args) {
         UserFrame newFrame = new UserFrame("Chat");
@@ -16,11 +19,22 @@ public class User {
     }
 }
 
+/**
+ * Genera el marco de la aplicacion. Extiende a JFrame.
+ *
+ */
 class UserFrame extends JFrame{
-    public UserFrame(String title){
-        super(title);
-        ImageIcon icon = new ImageIcon("C:\\Users\\Z420\\" +
-                "IdeaProjects\\TareaChat\\src\\tarea\\tareaChat\\chat-bubble.png");
+    /**
+     * Constructor de UserFrame.
+     *
+     * Añade el titulo y un icono al marco del Usuario
+     *
+     * @param titulo titulo del marco
+     */
+    public UserFrame(String titulo){
+        super(titulo);
+        URL iconUrl = getClass().getResource("chat-bubble.png");
+        ImageIcon icon = new ImageIcon(iconUrl);
         this.setIconImage(icon.getImage());
         setBounds(600,300,280,350);
         UserPanel newUser = new UserPanel();
@@ -28,6 +42,12 @@ class UserFrame extends JFrame{
         setVisible(true);
     }
 }
+
+/**
+ * Genera el panel de la aplicacion. En este se encuentran opciones para ingresar el nombre del usuario,
+ * la ip del destinatario y su respectivo puerto. Ademas, proporciona una ventana para ver y eviar mensajes
+ * y el numero del puerto el cual esta utilizando el usuario.
+ */
 class UserPanel extends JPanel implements Runnable{
 
     private JTextField campoTexto;
@@ -83,11 +103,15 @@ class UserPanel extends JPanel implements Runnable{
         campoOut.setText("");
     }
 
+    /**
+     * Acciones que ocurren al oprimir el boton de enviar. Implementa ActionListener.
+     *
+     * Crea un String con el nombre del usuario y el mensaje ingresado. Despues, genera una
+     * conexion por medio de un Socket con el IP y el puerto indicado. A traves de este,
+     * envia el texto por un DataInputStream. Puede lanzar excepciones de IoException y
+     * NumberFormatException
+     */
     private class TextoBoton implements ActionListener{ ;
-
-        public TextoBoton(){
-
-        }
 
         public void actionPerformed(ActionEvent e) {
             StringBuilder texto = new StringBuilder(campoNombre.getText() + ": " + campoTexto.getText());
@@ -109,6 +133,13 @@ class UserPanel extends JPanel implements Runnable{
         }
     }
 
+    /**
+     * Metodo generado al implementar Runnable. Se le ha modificado para que, por me dio de Threads,
+     * cree un ServerSocket que esta constantemente a la escucha de mensaje enviados al puerto indicado.
+     * Al recibir uno de estos mensajes, se imprime en la ventana de Chat.
+     *
+     * @throws IOException
+      */
     public void run() {
         try {
             ServerSocket newSS = new ServerSocket(0);
