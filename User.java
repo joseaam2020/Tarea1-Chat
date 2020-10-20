@@ -8,6 +8,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.*;
+import java.util.logging.*;
 
 /**
  * Genera una ventana de Chat para un usuario, con su respectivo ServerSocket
@@ -112,7 +113,7 @@ class UserPanel extends JPanel implements Runnable{
      * envia el texto por un DataInputStream. Puede lanzar excepciones de IoException y
      * NumberFormatException
      */
-    private class TextoBoton implements ActionListener{ ;
+    private class TextoBoton implements ActionListener{
 
         public void actionPerformed(ActionEvent e) {
             StringBuilder texto = new StringBuilder(campoNombre.getText() + ": " + campoTexto.getText());
@@ -126,12 +127,13 @@ class UserPanel extends JPanel implements Runnable{
                 output.close();
             } catch (IOException ioException) {
                 System.out.println("Sending");
-                System.out.println(ioException.getMessage());;
+                System.out.println(ioException.getMessage());
             } catch (NumberFormatException numberFormatException){
                 System.out.println("Port error");
                 System.out.println(numberFormatException.getMessage());
             }
         }
+
     }
 
     /**
