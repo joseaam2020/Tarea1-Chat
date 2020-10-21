@@ -5,35 +5,28 @@ import java.util.logging.*;
 
 public class UserLog {
 
-    private static Logger ulog = null;
-    private static ConsoleHandler uCH = null;
-    private static FileHandler uFH = null;
-    private static Exception eLog = null;
-    private static Level uLevel = null;
-    private static String uMensaje = null;
+    public static Logger ulog = null;
+    public static ConsoleHandler uCH = null;
+    public static FileHandler uFH = null;
 
-    public UserLog(Exception e, String className, Level errorLevel, String mensaje){
+    public UserLog(){
         try {
-            ulog = Logger.getLogger(className);
+            ulog = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
             uCH = new ConsoleHandler();
             uFH = new FileHandler("UserLog.txt");
             uFH.setFormatter(new SimpleFormatter());
             uCH.setLevel(Level.FINEST);
             uFH.setLevel(Level.FINEST);
-            ulog.addHandler(uCH);
+            //ulog.addHandler(uCH);
             ulog.addHandler(uFH);
 
-            eLog = e;
-            uLevel = errorLevel;
-            uMensaje = mensaje;
-
         } catch (IOException ioException) {
-            ioException.printStackTrace();
+            //ioException.printStackTrace();
         }
 
     }
 
-    public void log(){
-        ulog.log(uLevel, uMensaje, eLog);
+    public void log(Exception e, Level errorLevel, String mensaje){
+        ulog.log(errorLevel, mensaje, e);
     }
 }

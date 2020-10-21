@@ -60,6 +60,7 @@ class UserPanel extends JPanel implements Runnable{
     private JTextArea campoMensajes;
     private JLabel userPort;
     private JScrollPane marcoMensajes;
+    private UserLog logCreator = new UserLog();
 
     public UserPanel(){
         Color panelBackground = Color.decode("#292F36");
@@ -126,13 +127,11 @@ class UserPanel extends JPanel implements Runnable{
                 output.writeUTF(String.valueOf(texto));
                 output.close();
             } catch (IOException ioException) {
-                UserLog logCreator = new UserLog(ioException, TextoBoton.class.getName(), Level.WARNING,
+                logCreator.log(ioException, Level.WARNING,
                         "No se ha encontrado direccion ip o puerto ingresados");
-                logCreator.log();
             } catch (NumberFormatException numberFormatException){
-                UserLog logCreator = new UserLog(numberFormatException, TextoBoton.class.getName(), Level.INFO,
+                logCreator.log(numberFormatException, Level.INFO,
                         "Se ingreso texto en area de puerto");
-                logCreator.log();
             }
         }
 
@@ -161,9 +160,8 @@ class UserPanel extends JPanel implements Runnable{
                 input.close();
             }
         } catch (IOException e) {
-            UserLog logCreator = new UserLog(e, TextoBoton.class.getName(), Level.INFO,
+            logCreator.log(e, Level.INFO,
                     "Error al crear servidor de entrada");
-            logCreator.log();
         }
     }
 }
