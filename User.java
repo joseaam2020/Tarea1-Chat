@@ -126,11 +126,13 @@ class UserPanel extends JPanel implements Runnable{
                 output.writeUTF(String.valueOf(texto));
                 output.close();
             } catch (IOException ioException) {
-                System.out.println("Sending");
-                System.out.println(ioException.getMessage());
+                UserLog logCreator = new UserLog(ioException, TextoBoton.class.getName(), Level.WARNING,
+                        "No se ha encontrado direccion ip o puerto ingresados");
+                logCreator.log();
             } catch (NumberFormatException numberFormatException){
-                System.out.println("Port error");
-                System.out.println(numberFormatException.getMessage());
+                UserLog logCreator = new UserLog(numberFormatException, TextoBoton.class.getName(), Level.INFO,
+                        "Se ingreso texto en area de puerto");
+                logCreator.log();
             }
         }
 
@@ -159,7 +161,9 @@ class UserPanel extends JPanel implements Runnable{
                 input.close();
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            UserLog logCreator = new UserLog(e, TextoBoton.class.getName(), Level.INFO,
+                    "Error al crear servidor de entrada");
+            logCreator.log();
         }
     }
 }
