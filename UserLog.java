@@ -16,10 +16,12 @@ public class UserLog {
         try {
             ulog = Logger.getLogger(className);
             uCH = new ConsoleHandler();
-            uFH = new FileHandler("UserLog.log");
+            uFH = new FileHandler("UserLog.txt");
+            uFH.setFormatter(new SimpleFormatter());
             uCH.setLevel(Level.FINEST);
             uFH.setLevel(Level.FINEST);
             ulog.addHandler(uCH);
+            ulog.addHandler(uFH);
 
             eLog = e;
             uLevel = errorLevel;
