@@ -18,6 +18,10 @@ public class UserLog {
             uCH.setLevel(Level.FINEST);
             uFH.setLevel(Level.FINEST);
             //ulog.addHandler(uCH);
+            Handler[] ulogHandlers = ulog.getHandlers();
+            for(Handler uloghandler : ulogHandlers){
+                ulog.removeHandler(uloghandler);
+            }
             ulog.addHandler(uFH);
 
         } catch (IOException ioException) {

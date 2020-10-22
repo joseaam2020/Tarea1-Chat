@@ -52,6 +52,7 @@ class UserFrame extends JFrame{
  */
 class UserPanel extends JPanel implements Runnable{
 
+
     private JTextField campoTexto;
     private JTextField campoNombre;
     private JTextField ipAddress;
@@ -67,11 +68,23 @@ class UserPanel extends JPanel implements Runnable{
         Color labelColor = Color.decode("#FFFFFF");
         Color portColor = Color.decode("#FF6B6B");
         Color botonColor = Color.decode("#4ECDC4");
-        this.setBackground(panelBackground);
+        try{
+            this.setBackground(panelBackground);
+            throw new IllegalArgumentException("Error en color de fondo");
+        } catch (IllegalArgumentException e) {
+            logCreator.log(e, Level.INFO,
+                    "Error en creacion del chat");
+        }
         JLabel nombre = new JLabel("Nombre:");
         nombre.setForeground(labelColor);
         add(nombre);
-        campoNombre = new JTextField(20);
+        try{
+            campoNombre = new JTextField(20);
+            throw new IllegalArgumentException("Error en la creacion de JTextField");
+        } catch(IllegalArgumentException e){
+            logCreator.log(e, Level.INFO,
+                    "Error en creacion del chat");
+        }
         add(campoNombre);
         JLabel ip = new JLabel("Ip del destinatario:");
         ip.setForeground(labelColor);
